@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slate Point — Stormwater compliance software for California builders</title>
+  <meta name="description" content="Catch stormwater compliance issues before they become violations. Built for mid-market California construction firms filing under the 2022 CGP." />
+  <meta property="og:title" content="Slate Point — Stormwater compliance software for California builders" />
+  <meta property="og:description" content="Catch stormwater compliance issues before they become violations. Built for mid-market California construction firms." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💧%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --navy: #0f1e3d;
+      --navy-soft: #1a2e5c;
+      --accent: #3d7dd1;
+      --ink: #1a1a1a;
+      --ink-soft: #555;
+      --bg: #ffffff;
+      --bg-soft: #f5f7fb;
+      --border: #e3e6ec;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* nav */
+    nav {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+    .logo {
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--navy);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .logo-mark {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background: var(--accent);
+      border-radius: 3px;
+      transform: rotate(45deg);
+      margin-right: 8px;
+      vertical-align: -3px;
+    }
+    nav a.cta {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    nav a.cta:hover { text-decoration: underline; }
+
+    /* hero */
+    .hero { padding: 80px 0 60px; }
+    h1 {
+      font-size: 42px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .hero p.lead {
+      font-size: 20px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      max-width: 680px;
+      margin-bottom: 32px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--navy);
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: var(--navy-soft); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--navy);
+      padding: 14px 22px;
+      border: 1px solid var(--border);
+      margin-left: 8px;
+    }
+    .btn-secondary:hover { background: var(--bg-soft); }
+
+    /* sections */
+    section { padding: 56px 0; border-top: 1px solid var(--border); }
+    h2 {
+      font-size: 28px;
+      letter-spacing: -0.015em;
+      color: var(--navy);
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 17px;
+      color: var(--navy);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    p { color: var(--ink); margin-bottom: 16px; }
+    .muted { color: var(--ink-soft); }
+
+    ul.problems {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 0;
+    }
+    ul.problems li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink-soft);
+      display: flex;
+    }
+    ul.problems li:last-child { border-bottom: none; }
+    ul.problems li::before {
+      content: "→";
+      color: var(--accent);
+      margin-right: 12px;
+      font-weight: 700;
+    }
+
+    .steps { display: grid; gap: 24px; margin-top: 28px; }
+    @media (min-width: 700px) {
+      .steps { grid-template-columns: repeat(3, 1fr); }
+    }
+    .step {
+      padding: 22px;
+      background: var(--bg-soft);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .step .num {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .stat {
+      background: var(--bg-soft);
+      padding: 28px;
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      margin: 28px 0;
+    }
+    .stat .big {
+      font-size: 26px;
+      color: var(--navy);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .stat .small { color: var(--ink-soft); font-size: 15px; }
+
+    .founder {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 28px;
+      background: var(--bg-soft);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 24px;
+    }
+    .founder .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* cta block */
+    .cta-block {
+      text-align: center;
+      padding: 72px 0 90px;
+      background: var(--navy);
+      color: #fff;
+      margin-top: 56px;
+    }
+    .cta-block h2 { color: #fff; }
+    .cta-block p { color: rgba(255,255,255,0.8); max-width: 560px; margin: 0 auto 28px; }
+    .cta-block .btn {
+      background: #fff;
+      color: var(--navy);
+    }
+    .cta-block .btn:hover { background: var(--bg-soft); }
+
+    footer {
+      padding: 32px 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--ink-soft); text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 32px; }
+      .hero p.lead { font-size: 17px; }
+      .btn-secondary { display: block; margin: 10px 0 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="/" class="logo"><span class="logo-mark"></span>Slate Point</a>
+      <a href="#contact" class="cta">Book a 15-min call →</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1>Catch stormwater compliance issues before they become violations.</h1>
+      <p class="lead">
+        Most California CGP violations come down to paperwork — late reports, missed inspections, BMP logs lost in spreadsheets. Slate Point is a small tool built for mid-market builders to fix that.
+      </p>
+      <a href="#contact" class="btn">Book a 15-min call</a>
+      <a href="#problem" class="btn btn-secondary">How it works</a>
+    </div>
+  </header>
+
+  <section id="problem">
+    <div class="container">
+      <h2>The compliance cost is climbing.</h2>
+      <p>
+        Under the 2022 Construction General Permit, California's State Water Resources Control Board tightened numeric effluent limits, inspection cadence, and reporting requirements. A Caltrans analysis estimated annual compliance costs could nearly double — from ~$175M to $325-348M statewide.
+      </p>
+      <p>
+        And the top three violation categories in SMARTS haven't changed in a decade:
+      </p>
+      <ul class="problems">
+        <li><div><h3>Late reports</h3><span class="muted">The #1 violation category statewide — 1,800+ formal notices in a single fiscal year.</span></div></li>
+        <li><div><h3>Deficient BMP implementation</h3><span class="muted">Control measures not maintained, inspected, or documented on the required cadence.</span></div></li>
+        <li><div><h3>Incomplete or missing SWPPPs</h3><span class="muted">Plan updates missed after site changes; version drift between the office binder and the site.</span></div></li>
+      </ul>
+      <p style="margin-top: 28px;" class="muted">
+        None of these are failures of skill. They're failures of process — the paperwork gets ahead of the spreadsheet, and a missed checkbox turns into a violation weeks later.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>How Slate Point works.</h2>
+      <p class="muted">
+        Built specifically for California CGP compliance. Not a generic project-management tool.
+      </p>
+      <div class="steps">
+        <div class="step">
+          <div class="num">Step 1</div>
+          <h3>We set it up for you.</h3>
+          <p class="muted">No CSV uploads, no training on your side. We build your permit-and-site tree from your SMARTS filings.</p>
+        </div>
+        <div class="step">
+          <div class="num">Step 2</div>
+          <h3>Your team works as usual.</h3>
+          <p class="muted">Inspections and logs flow in from the field. We track schedules, deadlines, and BMP docs automatically.</p>
+        </div>
+        <div class="step">
+          <div class="num">Step 3</div>
+          <h3>You get alerts, not violations.</h3>
+          <p class="muted">We tell you when a report is coming due, an inspection is overdue, or a BMP log is missing — before it lands in SMARTS.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Who it's for.</h2>
+      <p>
+        California construction firms and developers managing 3-20 active CGP sites. The band where spreadsheets and email start breaking but in-house EHS teams don't make sense yet — multi-county residential developers, mid-market general contractors, and the QSPs who support them.
+      </p>
+      <div class="stat">
+        <div class="big">Built for the 2022 CGP.</div>
+        <div class="small">Numeric effluent limits. NAL exceedance tracking. Risk Level 2/3 site workflow. SMARTS-native submission flow.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>About the founder.</h2>
+      <div class="founder">
+        <div class="avatar">JS</div>
+        <div>
+          <h3 style="margin-bottom: 6px;">Justin Sumner</h3>
+          <p class="muted" style="margin-bottom: 12px;">Founder, Slate Point</p>
+          <p style="margin-bottom: 10px;">
+            I'm building Slate Point in public, one conversation at a time. Before scaling anything, I'm sitting down with mid-market California builders to hear how their compliance teams actually work day-to-day.
+          </p>
+          <p class="muted" style="margin-bottom: 0;">
+            If you're running active CGP sites and have 15 minutes to share how you handle SWPPPs, inspections, and SMARTS filings today, I'd love to talk. No pitch — I'm in research mode.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-block" id="contact">
+    <div class="container">
+      <h2>Book a 15-minute call.</h2>
+      <p>
+        Whether or not Slate Point ends up being useful for your team, I'll leave you with a better map of where the 2022 CGP changes are biting hardest — and the compliance checklist I built for California GCs.
+      </p>
+      <a href="mailto:justin@slatepointtech.com?subject=Slate%20Point%20—%2015%20min%20chat" class="btn">
+        Email justin@slatepointtech.com
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      © Slate Point Technologies · Built in California · <a href="mailto:justin@slatepointtech.com">justin@slatepointtech.com</a>
+    </div>
+  </footer>
+
+</body>
+</html>
