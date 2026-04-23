@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CA Stormwater Compliance Cost Calculator | Slate Point</title>
+  <meta name="description" content="Estimate your annual California stormwater compliance cost in seconds. Based on real CA SMARTS enforcement data." />
+  <meta property="og:title" content="CA Stormwater Compliance Cost Calculator" />
+  <meta property="og:description" content="Estimate your annual California stormwater compliance cost in seconds. Based on real CA SMARTS enforcement data." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💧%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --navy: #0f1e3d;
+      --navy-soft: #1a2e5c;
+      --accent: #3d7dd1;
+      --accent-soft: #e9f0fa;
+      --ink: #1a1a1a;
+      --ink-soft: #555;
+      --ink-faint: #888;
+      --bg: #ffffff;
+      --bg-soft: #f5f7fb;
+      --border: #e3e6ec;
+      --green: #2f8c5f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    nav { padding: 20px 0; border-bottom: 1px solid var(--border); }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+    .logo {
+      font-weight: 700; font-size: 19px; color: var(--navy);
+      text-decoration: none; letter-spacing: -0.01em;
+    }
+    .logo-mark {
+      display: inline-block; width: 18px; height: 18px;
+      background: var(--accent); border-radius: 3px;
+      transform: rotate(45deg); margin-right: 8px; vertical-align: -3px;
+    }
+    nav a.nav-cta {
+      color: var(--accent); text-decoration: none; font-weight: 600; font-size: 15px;
+    }
+    nav a.nav-cta:hover { text-decoration: underline; }
+
+    header.hero {
+      padding: 60px 0 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 {
+      font-size: 36px; line-height: 1.15; letter-spacing: -0.02em;
+      font-weight: 700; color: var(--navy); margin-bottom: 12px;
+    }
+    .hero p.lead {
+      font-size: 17px; color: var(--ink-soft); max-width: 640px;
+    }
+
+    main.calculator {
+      display: grid; gap: 32px;
+      grid-template-columns: 1fr;
+      padding: 40px 0;
+    }
+    @media (min-width: 900px) {
+      main.calculator { grid-template-columns: 400px 1fr; gap: 56px; }
+    }
+
+    .inputs {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px;
+    }
+    .inputs h2, .outputs h2 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--ink-faint); font-weight: 700; margin-bottom: 20px;
+    }
+
+    .input-group { margin-bottom: 22px; }
+    .input-group:last-child { margin-bottom: 0; }
+    .input-group label {
+      display: block; font-size: 14px; color: var(--ink);
+      margin-bottom: 8px; font-weight: 500;
+    }
+    .input-row {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .input-row input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none; appearance: none;
+      height: 4px; background: var(--border); border-radius: 4px; outline: none;
+    }
+    .input-row input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px; background: var(--accent);
+      border-radius: 50%; cursor: pointer;
+    }
+    .input-row input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; background: var(--accent);
+      border-radius: 50%; cursor: pointer; border: none;
+    }
+    .input-row input[type="number"] {
+      width: 80px; padding: 6px 10px;
+      border: 1px solid var(--border); border-radius: 4px;
+      font-size: 14px; font-family: inherit;
+      text-align: right;
+    }
+    .input-row input[type="number"]:focus {
+      outline: 2px solid var(--accent); outline-offset: -1px;
+      border-color: var(--accent);
+    }
+    .input-group .prefix, .input-group .suffix {
+      color: var(--ink-faint); font-size: 13px;
+    }
+    .input-hint {
+      font-size: 12px; color: var(--ink-faint); margin-top: 4px;
+    }
+
+    .outputs { padding: 4px 0; }
+    .hero-number {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+      color: #fff; padding: 32px;
+      border-radius: 10px; margin-bottom: 28px;
+    }
+    .hero-number .label {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em;
+      opacity: 0.8; margin-bottom: 8px;
+    }
+    .hero-number .value {
+      font-size: 48px; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .hero-number .sublabel {
+      font-size: 14px; opacity: 0.75;
+    }
+
+    .breakdown {
+      display: grid; gap: 24px; margin-bottom: 24px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 600px) {
+      .breakdown { grid-template-columns: 1fr 1fr; }
+    }
+    .breakdown-col {
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 20px;
+    }
+    .breakdown-col h3 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--ink-faint); margin-bottom: 14px; font-weight: 700;
+    }
+    .breakdown-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; font-size: 14px; border-bottom: 1px dashed var(--border);
+    }
+    .breakdown-row:last-of-type { border-bottom: none; }
+    .breakdown-row .bname { color: var(--ink-soft); }
+    .breakdown-row .bval { font-variant-numeric: tabular-nums; font-weight: 600; }
+    .breakdown-total {
+      padding: 12px 0 4px; margin-top: 6px; border-top: 2px solid var(--border);
+      display: flex; justify-content: space-between;
+      font-weight: 700; color: var(--navy);
+    }
+    .breakdown-total .bval { font-variant-numeric: tabular-nums; }
+    .breakdown-col.with-sp {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .cta-box {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 10px; padding: 24px; text-align: center;
+      margin-top: 12px;
+    }
+    .cta-box p { font-size: 15px; color: var(--ink-soft); margin-bottom: 14px; }
+    .cta-box .btn {
+      display: inline-block; background: var(--navy); color: #fff;
+      padding: 12px 24px; border-radius: 6px; text-decoration: none;
+      font-weight: 600; font-size: 15px; transition: background 0.15s;
+    }
+    .cta-box .btn:hover { background: var(--navy-soft); }
+
+    .methodology {
+      margin-top: 48px; padding: 28px; background: var(--bg-soft);
+      border-radius: 10px; border: 1px solid var(--border);
+      font-size: 14px; color: var(--ink-soft); line-height: 1.6;
+    }
+    .methodology h2 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--ink-faint); font-weight: 700; margin-bottom: 14px;
+    }
+    .methodology ul { padding-left: 20px; }
+    .methodology li { margin-bottom: 6px; }
+    .methodology a { color: var(--accent); text-decoration: underline; }
+
+    footer {
+      padding: 32px 0; color: var(--ink-faint); font-size: 13px;
+      text-align: center; border-top: 1px solid var(--border); margin-top: 40px;
+    }
+    footer a { color: var(--ink-soft); text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 28px; }
+      .hero-number .value { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="/" class="logo"><span class="logo-mark"></span>Slate Point</a>
+      <a href="/#contact" class="nav-cta">Book a 15-min call →</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1>California stormwater compliance cost calculator</h1>
+      <p class="lead">
+        Estimate what your team is currently spending on CGP compliance, and what Slate Point could save you. Defaults are pulled from real CA SMARTS enforcement data (2023-2026).
+      </p>
+    </div>
+  </header>
+
+  <main class="calculator container">
+
+    <aside class="inputs">
+      <h2>Your situation</h2>
+
+      <div class="input-group">
+        <label for="sites">Active construction sites (CGP permits)</label>
+        <div class="input-row">
+          <input type="range" id="sites-r" min="1" max="30" value="5" />
+          <input type="number" id="sites" min="1" max="100" value="5" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="hours">Hours per week per site, spent on compliance admin</label>
+        <div class="input-row">
+          <input type="range" id="hours-r" min="0.5" max="10" step="0.5" value="2" />
+          <input type="number" id="hours" min="0" max="40" step="0.5" value="2" />
+        </div>
+        <div class="input-hint">Includes SWPPP upkeep, inspection logs, BMP docs, SMARTS submissions.</div>
+      </div>
+
+      <div class="input-group">
+        <label for="rate">Burdened staff rate ($ / hour)</label>
+        <div class="input-row">
+          <input type="range" id="rate-r" min="25" max="150" step="5" value="65" />
+          <input type="number" id="rate" min="20" max="300" value="65" />
+        </div>
+        <div class="input-hint">Wage plus benefits and overhead. Typical construction superintendent burdened rate: $55-80.</div>
+      </div>
+
+      <div class="input-group">
+        <label for="consultant">External QSD / consultant ($ / month / site)</label>
+        <div class="input-row">
+          <input type="range" id="consultant-r" min="0" max="2000" step="50" value="800" />
+          <input type="number" id="consultant" min="0" max="5000" value="800" />
+        </div>
+        <div class="input-hint">Typical CA QSD retainers run $600-1,500 per active site per month.</div>
+      </div>
+
+      <div class="input-group">
+        <label for="violations">Violations in the last 12 months</label>
+        <div class="input-row">
+          <input type="range" id="violations-r" min="0" max="30" value="4" />
+          <input type="number" id="violations" min="0" max="100" value="4" />
+        </div>
+        <div class="input-hint">Any violation recorded in SMARTS, including late reports.</div>
+      </div>
+    </aside>
+
+    <section class="outputs">
+      <h2>Results</h2>
+
+      <div class="hero-number">
+        <div class="label">Estimated annual savings with Slate Point</div>
+        <div class="value" id="hero-savings">$0</div>
+        <div class="sublabel" id="hero-subtext">Compared to your current compliance spend.</div>
+      </div>
+
+      <div class="breakdown">
+        <div class="breakdown-col">
+          <h3>Your current annual spend</h3>
+          <div class="breakdown-row">
+            <span class="bname">Staff admin time</span>
+            <span class="bval" id="cur-staff">$0</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="bname">Consultant / QSD</span>
+            <span class="bval" id="cur-consultant">$0</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="bname">Fine exposure</span>
+            <span class="bval" id="cur-fines">$0</span>
+          </div>
+          <div class="breakdown-total">
+            <span>Total</span>
+            <span class="bval" id="cur-total">$0</span>
+          </div>
+        </div>
+
+        <div class="breakdown-col with-sp">
+          <h3>With Slate Point</h3>
+          <div class="breakdown-row">
+            <span class="bname">Staff admin time <span style="color:var(--green)">(-50%)</span></span>
+            <span class="bval" id="sp-staff">$0</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="bname">Consultant / QSD <span style="color:var(--green)">(-40%)</span></span>
+            <span class="bval" id="sp-consultant">$0</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="bname">Fine exposure <span style="color:var(--green)">(-60%)</span></span>
+            <span class="bval" id="sp-fines">$0</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="bname">Slate Point ($99/site/mo)</span>
+            <span class="bval" id="sp-price">$0</span>
+          </div>
+          <div class="breakdown-total">
+            <span>Total</span>
+            <span class="bval" id="sp-total">$0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-box">
+        <p>Want to walk through your real numbers and see whether a free pilot fits? 15 minutes, founder-run.</p>
+        <a href="https://calendly.com/slatepoint/15min" class="btn" target="_blank" rel="noopener">
+          Book a 15-min call
+        </a>
+      </div>
+
+    </section>
+  </main>
+
+  <div class="container">
+    <div class="methodology">
+      <h2>How these numbers are calculated</h2>
+      <p style="margin-bottom: 12px;">
+        Defaults and benchmarks are pulled from the California State Water Resources Control Board's SMARTS dataset, refreshed weekly on <a href="https://data.ca.gov/dataset/stormwater-regulatory-including-enforcement-actions-information-and-water-quality-results" target="_blank" rel="noopener">data.ca.gov</a>. Statistics below are for active Construction General Permits (CGPs), 2023-2026.
+      </p>
+      <ul>
+        <li><strong>Fine exposure per violation</strong>: ~$1,100 statewide average. Calculated from 19,827 enforcement actions totaling $19.6M over 36 months. Only 3.3% result in a dollar penalty, but when they do the median is $12,000.</li>
+        <li><strong>Admin time savings assumption (-50%)</strong>: based on industry benchmarks for CGP automation tools replacing spreadsheet and email workflows. Most time saved: SMARTS submissions, inspection-log compilation, and weekly rain-event tracking.</li>
+        <li><strong>Consultant cost reduction (-40%)</strong>: assumes you keep your QSD for site-specific SWPPP consulting and Risk Level 2/3 work, but offload routine reporting and documentation to the platform.</li>
+        <li><strong>Violation reduction (-60%)</strong>: targeted at the categories the software directly addresses: Late Report (38% of all CA violations), Deficient Report, Failure to meet NEC criteria, and SWPPP documentation gaps.</li>
+        <li><strong>Slate Point price</strong>: $99 per active CGP site per month. Pilot pricing (first 90 days): free. Pricing subject to change.</li>
+      </ul>
+      <p style="margin-top: 12px;">
+        These are estimates based on statewide averages. Actual savings will vary by firm size, current process maturity, and site risk levels. The calculator is designed to anchor a conversation, not replace one.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      © Slate Point Technologies · Built in California · <a href="/">Back to home</a>
+    </div>
+  </footer>
+
+  <script>
+    // --- Calculator logic ---
+    const PRICE_PER_SITE_MONTH = 99;
+    const FINE_PER_VIOLATION = 1100;   // statewide weighted average from SMARTS 2023-2026
+    const ADMIN_REDUCTION = 0.50;
+    const CONSULTANT_REDUCTION = 0.40;
+    const VIOLATION_REDUCTION = 0.60;
+
+    const fmt = n => {
+      if (n <= 0) return '$0';
+      return '$' + Math.round(n).toLocaleString('en-US');
+    };
+
+    const linkPair = (numberId, rangeId) => {
+      const num = document.getElementById(numberId);
+      const rng = document.getElementById(rangeId);
+      num.addEventListener('input', () => { rng.value = num.value; recalc(); });
+      rng.addEventListener('input', () => { num.value = rng.value; recalc(); });
+    };
+    ['sites','hours','rate','consultant','violations'].forEach(id => linkPair(id, id + '-r'));
+
+    function recalc() {
+      const sites       = Math.max(1, parseFloat(document.getElementById('sites').value) || 1);
+      const hours       = parseFloat(document.getElementById('hours').value) || 0;
+      const rate        = parseFloat(document.getElementById('rate').value) || 0;
+      const consultant  = parseFloat(document.getElementById('consultant').value) || 0;
+      const violations  = parseFloat(document.getElementById('violations').value) || 0;
+
+      // Current spend
+      const curStaff = sites * hours * 52 * rate;
+      const curConsult = sites * consultant * 12;
+      const curFines = violations * FINE_PER_VIOLATION;
+      const curTotal = curStaff + curConsult + curFines;
+
+      // With Slate Point
+      const spStaff = curStaff * (1 - ADMIN_REDUCTION);
+      const spConsult = curConsult * (1 - CONSULTANT_REDUCTION);
+      const spFines = curFines * (1 - VIOLATION_REDUCTION);
+      const spPrice = sites * PRICE_PER_SITE_MONTH * 12;
+      const spTotal = spStaff + spConsult + spFines + spPrice;
+
+      const savings = curTotal - spTotal;
+
+      // Update DOM
+      document.getElementById('cur-staff').textContent = fmt(curStaff);
+      document.getElementById('cur-consultant').textContent = fmt(curConsult);
+      document.getElementById('cur-fines').textContent = fmt(curFines);
+      document.getElementById('cur-total').textContent = fmt(curTotal);
+
+      document.getElementById('sp-staff').textContent = fmt(spStaff);
+      document.getElementById('sp-consultant').textContent = fmt(spConsult);
+      document.getElementById('sp-fines').textContent = fmt(spFines);
+      document.getElementById('sp-price').textContent = fmt(spPrice);
+      document.getElementById('sp-total').textContent = fmt(spTotal);
+
+      const hero = document.getElementById('hero-savings');
+      const sub = document.getElementById('hero-subtext');
+      if (savings > 0) {
+        hero.textContent = fmt(savings);
+        hero.style.color = '';
+        const pct = Math.round((savings / curTotal) * 100);
+        sub.textContent = `${pct}% reduction vs your current spend of ${fmt(curTotal)}.`;
+      } else {
+        hero.textContent = '$0';
+        sub.textContent = 'At your current scale, Slate Point pricing meets your existing spend. Worth a quick chat anyway?';
+      }
+    }
+
+    recalc();
+  </script>
+
+</body>
+</html>
